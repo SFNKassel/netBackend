@@ -48,10 +48,8 @@ public class NetBackend implements Runnable {
 
     public String getJsonTree() throws IOException {
         Collection<Node> nodes = getNodes().values();
-        String ret = "";
-        Node top = new Node("", "Internet", "0");
-//        nodes.stream().filter(n -> top.ip.equals(n.ip))
-        nodes.stream().filter(n -> n.parentNode == null).forEach(n -> top.children.add(n));
+        Node top = nodes.stream().filter(n -> n.parentNode == null).findFirst().orElse(new Node("", "Network", "0"));
+        System.out.println(node2Json(top));
 
         return node2Json(top);
     }
@@ -77,8 +75,9 @@ public class NetBackend implements Runnable {
         Process cProcess = Runtime.getRuntime().exec(cPath.getAbsolutePath());
         robIN = new Scanner(cProcess.getInputStream());
         HashMap<String, Node> knownNodes = new HashMap<>();
-        while ((line = robIN.nextLine()) != null) {
+        while (robIN.hasNextLine() && (line = robIN.nextLine()) != null) {
             Node n = parseLine(line);
+//            System.out.println(line);
             knownNodes.put(n.ip, n);
         }
         knownNodes.values().stream()
@@ -88,11 +87,12 @@ public class NetBackend implements Runnable {
 
         knownNodes.values().stream().filter(n -> n.parentNode != null).forEach(n -> n.parentNode.children.add(n));
 
+        knownNodes.values().stream().forEach(System.out::println);
         return knownNodes;
     }
 
     private Node parseLine(String line) {
-        String[] cols = line.split(",");
+        String[] cols = (line+", ,").split(",");
 
         if (cols.length < 4)
             throw new IllegalArgumentException(line);

@@ -21,7 +21,7 @@ public class WebSocketDataProvider extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-
+        System.out.println("connect");
     }
 
     @Override
@@ -31,6 +31,7 @@ public class WebSocketDataProvider extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+//        System.out.println("onMessage");
         conn.send(nb.json);
     }
 

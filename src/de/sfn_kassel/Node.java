@@ -21,4 +21,20 @@ public class Node {
         this.ping = ping;
         this.parentIP = parent;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "ip='" + ip + '\'' +
+                ", mac='" + mac + '\'' +
+                ", ping='" + ping + '\'' +
+                ", parentIP='" + parentIP + '\'' +
+                ", children=" + children +
+                '}';
+    }
+
+    //    @Override
+//    public String toString() {
+//        return super.toString()+"["+ip+","+;
+//    }
 }
