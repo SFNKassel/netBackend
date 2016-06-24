@@ -49,7 +49,7 @@ public class NetBackend implements Runnable {
     public String getJsonTree() throws IOException {
         Collection<Node> nodes = getNodes().values();
         String ret = "";
-        Node top = new Node("wir", "hier", "0");
+        Node top = new Node("", "Internet", "0");
 //        nodes.stream().filter(n -> top.ip.equals(n.ip))
         nodes.stream().filter(n -> n.parentNode == null).forEach(n -> top.children.add(n));
 
@@ -81,7 +81,10 @@ public class NetBackend implements Runnable {
             Node n = parseLine(line);
             knownNodes.put(n.ip, n);
         }
-        knownNodes.values().stream().filter(n -> knownNodes.containsKey(n.parentIP)).forEach(n -> n.parentNode = knownNodes.get(n.parentIP));
+        knownNodes.values().stream()
+                .filter(n -> !n.ip.equals(n.parentIP))
+                .filter(n -> knownNodes.containsKey(n.parentIP))
+                .forEach(n -> n.parentNode = knownNodes.get(n.parentIP));
 
         knownNodes.values().stream().filter(n -> n.parentNode != null).forEach(n -> n.parentNode.children.add(n));
 
