@@ -29,29 +29,24 @@ public class NetBackend implements Runnable {
     public String getJsonTree() throws IOException {
         Collection<Node> nodes = getNodes().values();
         String ret = "";
+        Node top = new Node("wir", "hier", "42");
+        nodes.stream().filter()
         nodes.parallelStream().filter(n -> n.parentNode == null).forEach(n -> {
             n.children
         });
     }
 
     private String node2Json(Node n) {
-        StringBuilder json = new StringBuilder();
+        StringBuilder json = new StringBuilder(String.format("{mac:\"%s\",ip:\"%s\",ping:%s,nodes:[", n.mac, n.ip, n.ping));
 
-        json.append("{mac:");
-        json.append(n.mac);
-        json.append(",ip:");
-        json.append(n.ip);
-        json.append(",ping:");
-        json.append(n.ping);
-        json.append(",childs:");
-
-        json.append("{");
-        for(Node child : n.children){
-            json.append(node2Json(child));
-            json.append(",");
+        if (!n.children.isEmpty()) {
+            for (Node child : n.children) {
+                json.append(node2Json(child));
+                json.append(",");
+            }
+            json.deleteCharAt(json.length() - 1);
         }
-        json.deleteCharAt(json.length() - 1);
-        json.append("}}");
+        json.append("]}");
         return json.toString();
     }
 
