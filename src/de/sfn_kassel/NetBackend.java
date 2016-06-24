@@ -35,15 +35,24 @@ public class NetBackend implements Runnable {
     }
 
     private String node2Json(Node n) {
-        if(n.children.isEmpty())
-            return;
-
         StringBuilder json = new StringBuilder();
+
+        json.append("{mac:");
+        json.append(n.mac);
+        json.append(",ip:");
+        json.append(n.ip);
+        json.append(",ping:");
+        json.append(n.ping);
+        json.append(",childs:");
+
         json.append("{");
         for(Node child : n.children){
             json.append(node2Json(child));
-
+            json.append(",");
         }
+        json.deleteCharAt(json.length() - 1);
+        json.append("}}");
+        return json.toString();
     }
 
     private HashMap<String, Node> getNodes() throws IOException {
