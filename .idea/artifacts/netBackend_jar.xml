@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="netBackend:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/netBackend_jar</output-path>
+    <root id="archive" name="netBackend.jar">
+      <element id="module-output" name="netBackend" />
+    </root>
+  </artifact>
+</component>
