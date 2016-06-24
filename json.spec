@@ -1,7 +1,8 @@
-{mac,ip,ping,{childs}}
-
-child = {mac,ip,ping,{childs}}
-
-wenn keine childs
-
-child = {}
+{
+  nodes: [
+    {mac: "mac", ip: "ip", ping: ping, nodes: [
+      {mac: "mac", ip: "ip", ping: ping, nodes: []}
+    ]},
+    {mac: "mac", ip: "ip", ping: ping, nodes: []}
+  ]
+}
