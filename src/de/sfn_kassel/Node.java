@@ -7,7 +7,7 @@ import java.util.List;
  * Created by anselm on 24.06.16.
  */
 public class Node {
-    String ip, mac, ping, parent;
+    String ip, mac, ping, parentIP;
     Node parentNode;
     List<Node> children = new ArrayList<>();
 
@@ -19,6 +19,6 @@ public class Node {
         this.ip = ip;
         this.mac = mac;
         this.ping = ping;
-        this.parent = parent;
+        this.parentIP = parent;
     }
 }
