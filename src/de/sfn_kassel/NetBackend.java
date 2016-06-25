@@ -2,6 +2,7 @@ package de.sfn_kassel;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -103,6 +104,17 @@ public class NetBackend implements Runnable {
         if (cols.length < 4)
             throw new IllegalArgumentException(line);
 
-        return new Node(cols[0], cols[1], cols[2], cols[3]);
+	String host = "";
+	InetAddress addr;
+		try {
+			addr = InetAddress.getByName(cols[1]);
+			host = addr.getHostName();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+        return new Node(host, cols[1], cols[2], cols[3]);
     }
 }
