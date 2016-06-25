@@ -13,7 +13,9 @@ import java.util.Scanner;
 public class NetBackend implements Runnable {
 
     private final File cPath;
-    public String json = "{mac:\"please wait\",ip:\"0\",ping:0,nodes:[]}";
+    public String json = "{\"mac\":\"please wait\",\"ip\":\"0\",\"ping\":0,\"nodes\":[]}";
+
+    WebSocketDataProvider wsdp;
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello, world!");
@@ -31,7 +33,11 @@ public class NetBackend implements Runnable {
         while (true) {
             try {
                 json = getJsonTree();
+                wsdp.sendToAll();
+                Thread.sleep(1000);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -39,7 +45,7 @@ public class NetBackend implements Runnable {
 
     private void startServer() {
         try {
-            WebSocketDataProvider wsdp = new WebSocketDataProvider(this);
+            wsdp = new WebSocketDataProvider(this);
             wsdp.start();
         } catch (UnknownHostException e) {
             e.printStackTrace();

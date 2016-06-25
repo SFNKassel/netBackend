@@ -19,9 +19,16 @@ public class WebSocketDataProvider extends WebSocketServer {
         this.nb = nb;
     }
 
+    public void sendToAll() {
+        for(WebSocket conn : connections()) {
+            System.out.println(nb.json);
+            conn.send(nb.json);
+        }
+    }
+
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        System.out.println("connect");
+        conn.send(nb.json);
     }
 
     @Override
@@ -31,7 +38,6 @@ public class WebSocketDataProvider extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-//        System.out.println("onMessage");
         conn.send(nb.json);
     }
 
